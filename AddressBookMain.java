@@ -143,6 +143,18 @@ public class AddressBookMain {
 		return list;
 	}
 	
+	public void searchContactAll(String contactFirstName,
+			String contactLastName, String LocationName) {
+		
+			record.stream().filter(obj -> (
+					((obj.city.equals(LocationName)) || (obj.state.equals(LocationName)))	//checking for city/state match
+					&&(obj.firstName.equals(contactFirstName))								//checking for first name match
+					&&(obj.lastName.equals(contactLastName))								//checking for last name match
+					))
+
+					.forEach(System.out::println);
+	}
+	
 	public static void main(String[] args) {
 		
 		Scanner sc=new Scanner(System.in);
@@ -165,7 +177,7 @@ public class AddressBookMain {
 		//initiating user functions of entries
 		
 		String user_input="1";
-		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3"))) {
+		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3") || user_input.equals("4"))) {
 			
 			// Checking in address list is present in hashmap
 			System.out.print("Enter the Name of the Address Book: ");
@@ -186,7 +198,8 @@ public class AddressBookMain {
 			System.out.println("1. Add a new contact.");
 			System.out.println("2. Edit an existing contact.");
 			System.out.println("3. Delete an existing contact.");
-			System.out.println("4. Switch Directory");
+			System.out.println("4. Search all.");
+			System.out.println("5. Switch Directory");
 			System.out.println("Logout");
 			user_input=sc.next();
 			
@@ -211,6 +224,17 @@ public class AddressBookMain {
 				break;
 			}
 			case "4": {
+				System.out.println("Please enter details to be searched.");
+				System.out.print("First Name: ");
+				String firstName=sc.next();
+				System.out.print("Last Name: ");
+				String lastName=sc.next();
+				System.out.print("City/State: ");
+				String location=sc.next();
+				buildObj.searchContactAll(firstName, lastName, location);
+				break;
+			}
+			case "5": {
 				user_input="1";
 				continue;
 			}
