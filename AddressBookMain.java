@@ -7,10 +7,14 @@ public class AddressBookMain {
 	
 	private HashMap<String, ArrayList<Collection>> addressBook;
 	private static ArrayList<Collection> record;
+	private static HashMap<String, Collection> person_cityMap;
+	private static HashMap<String, Collection> person_stateMap;
 
 	public AddressBookMain() {
 		record=new ArrayList<Collection>();
 		addressBook = new HashMap<String, ArrayList<Collection>>();
+		person_cityMap=new HashMap<String, Collection>();
+		person_stateMap=new HashMap<String, Collection>();
 	}
 
 	public void display() {
@@ -53,7 +57,7 @@ public class AddressBookMain {
 		
 		//Checking for duplicates
 		if (record.stream().anyMatch(obj -> obj.firstName.equals(firstName))
-				&& record.stream().anyMatch(obj -> obj.lastName.equals(lastName))) {
+				|| record.stream().anyMatch(obj -> obj.lastName.equals(lastName))) {
 			System.out.println("This contact already existes. Resetting");
 			add();
 			return null;
@@ -75,6 +79,8 @@ public class AddressBookMain {
 		//saving as new entry
 		Collection entry=new Collection(firstName,lastName,
 				address,city,state,zipCode,phoneNo,email);
+		person_cityMap.put(city,entry);
+		person_cityMap.put(state,entry);
 		return entry;					//returning entry to main
 	}
 	
@@ -166,6 +172,8 @@ public class AddressBookMain {
 				"pmo@office.com");
 		buildObj.addToRecord(entry1,"AddressBook1");				//Adding entry to record
 		System.out.println(entry1);
+		person_cityMap.put("New Delhi",entry1);
+		person_stateMap.put("Delhi",entry1);
 		
 		//Creating second entry
 		Collection entry2=new Collection("Tanmay", "Jain",
@@ -173,11 +181,13 @@ public class AddressBookMain {
 				"mail.tanmay@gmail.com");
 		buildObj.addToRecord(entry2,"AddressBook1");				//Adding entry to record
 		System.out.println(entry2);
+		person_cityMap.put("Jaipur",entry2);
+		person_stateMap.put("Raj",entry2);
 		
 		//initiating user functions of entries
 		
 		String user_input="1";
-		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3") || user_input.equals("4"))) {
+		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3") || user_input.equals("4") || user_input.equals("5") || user_input.equals("6"))) {
 			
 			// Checking in address list is present in hashmap
 			System.out.print("Enter the Name of the Address Book: ");
@@ -199,7 +209,9 @@ public class AddressBookMain {
 			System.out.println("2. Edit an existing contact.");
 			System.out.println("3. Delete an existing contact.");
 			System.out.println("4. Search all.");
-			System.out.println("5. Switch Directory");
+			System.out.println("5. Search by city.");
+			System.out.println("6. Search by state.");
+			System.out.println("7. Switch Directory");
 			System.out.println("Logout");
 			user_input=sc.next();
 			
@@ -235,6 +247,30 @@ public class AddressBookMain {
 				break;
 			}
 			case "5": {
+				System.out.print("City Name: ");
+				String location=sc.next();
+				for(Map.Entry mapElement : person_cityMap.entrySet()) {
+					String city = (String)mapElement.getKey();
+					Collection person = (Collection)mapElement.getValue();
+					if (location.equals(city)) {
+						person.display();
+					}
+				}
+				break;
+			}
+			case "6": {
+				System.out.print("State Name: ");
+				String location=sc.next();
+				for(Map.Entry mapElement : person_stateMap.entrySet()) {
+					String state = (String)mapElement.getKey();
+					Collection person = (Collection)mapElement.getValue();
+					if (location.equals(state)) {
+						person.display();
+					}
+				}
+				break;
+			}
+			case "7": {
 				user_input="1";
 				continue;
 			}
