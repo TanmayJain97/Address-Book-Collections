@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class AddressBookMain {
-	
+
 	private HashMap<String, ArrayList<Collection>> addressBook;
 	private static ArrayList<Collection> record;
 	private static HashMap<String, Collection> person_cityMap;
@@ -22,7 +22,7 @@ public class AddressBookMain {
 			obj.display();
 		}
 	}
-	
+
 	public void addToRecord(Collection obj,String bookname) {
 		try {
 			record.add(new Collection(obj.firstName, obj.lastName, obj.address,
@@ -34,9 +34,9 @@ public class AddressBookMain {
 	public void addBookMap(String bookName, ArrayList<Collection> obj) {
 		addressBook.put(bookName, obj);
 	}
-	
+
 	public static Collection add() {
-		
+
 		//method for adding new entries.
 		Scanner sc=new Scanner(System.in);
 		String firstName;					//Attributes to be added
@@ -47,14 +47,14 @@ public class AddressBookMain {
 		long zipCode;
 		String phoneNo;
 		String email;
-		
+
 		//asking user input
 		System.out.println("Please enter details to be added.");
 		System.out.print("First Name: ");
 		firstName=sc.next();
 		System.out.print("Last Name: ");
 		lastName=sc.next();
-		
+
 		//Checking for duplicates
 		if (record.stream().anyMatch(obj -> obj.firstName.equals(firstName))
 				|| record.stream().anyMatch(obj -> obj.lastName.equals(lastName))) {
@@ -62,7 +62,7 @@ public class AddressBookMain {
 			add();
 			return null;
 		}
-		
+
 		System.out.print("Address: ");
 		address=sc.next();
 		System.out.print("City: ");
@@ -75,7 +75,7 @@ public class AddressBookMain {
 		phoneNo=sc.next();
 		System.out.print("Email: ");
 		email=sc.next();
-		
+
 		//saving as new entry
 		Collection entry=new Collection(firstName,lastName,
 				address,city,state,zipCode,phoneNo,email);
@@ -83,9 +83,9 @@ public class AddressBookMain {
 		person_cityMap.put(state,entry);
 		return entry;					//returning entry to main
 	}
-	
+
 	public static ArrayList<Collection> edit(ArrayList<Collection> list, String name) {
-		
+
 		//method for edit
 		Scanner sc=new Scanner(System.in);
 		boolean flag=false;
@@ -110,7 +110,7 @@ public class AddressBookMain {
 				obj.phoneNo=sc.next();
 				System.out.print("Email: ");
 				obj.email=sc.next();
-				
+
 				System.out.println("Record updated.");
 				break;
 			}
@@ -120,15 +120,15 @@ public class AddressBookMain {
 		}
 		return list;
 	}
-	
+
 	public static ArrayList<Collection> delete(ArrayList<Collection> list, String name) {
-		
+
 		//method for delete
 		Scanner sc=new Scanner(System.in);
 		boolean flag=false;
 		name.replaceAll("\\P{Print}","");
 		String lower_name=name.toLowerCase();
-		
+
 		try {
 			for (Collection obj:list) {
 				String firstName=obj.firstName.toLowerCase();
@@ -136,7 +136,7 @@ public class AddressBookMain {
 				if (firstName.equals(lower_name) ||
 						lastName.equals(lower_name)) {
 					flag=true;
-					
+
 					System.out.println("Record deleted for "+obj.firstName+" "+obj.lastName);
 					list.remove(obj);			//delete entry from record
 					System.out.println("Record updated.");
@@ -148,24 +148,24 @@ public class AddressBookMain {
 		}
 		return list;
 	}
-	
+
 	public void searchContactAll(String contactFirstName,
 			String contactLastName, String LocationName) {
-		
-			record.stream().filter(obj -> (
-					((obj.city.equals(LocationName)) || (obj.state.equals(LocationName)))	//checking for city/state match
-					&&(obj.firstName.equals(contactFirstName))								//checking for first name match
-					&&(obj.lastName.equals(contactLastName))								//checking for last name match
-					))
 
-					.forEach(System.out::println);
+		record.stream().filter(obj -> (
+				((obj.city.equals(LocationName)) || (obj.state.equals(LocationName)))	//checking for city/state match
+				&&(obj.firstName.equals(contactFirstName))								//checking for first name match
+				&&(obj.lastName.equals(contactLastName))								//checking for last name match
+				))
+
+		.forEach(System.out::println);
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		Scanner sc=new Scanner(System.in);
 		AddressBookMain buildObj=new AddressBookMain();
-		
+
 		//Creating first entry
 		Collection entry1=new Collection("Narendra", "Modi",
 				"PMO", "New Delhi", "Delhi", 114102, "9765422564",
@@ -174,7 +174,7 @@ public class AddressBookMain {
 		System.out.println(entry1);
 		person_cityMap.put("New Delhi",entry1);
 		person_stateMap.put("Delhi",entry1);
-		
+
 		//Creating second entry
 		Collection entry2=new Collection("Tanmay", "Jain",
 				"Mahaveer Nagar", "Jaipur", "Raj", 302011, "9765485884",
@@ -183,12 +183,12 @@ public class AddressBookMain {
 		System.out.println(entry2);
 		person_cityMap.put("Jaipur",entry2);
 		person_stateMap.put("Raj",entry2);
-		
+
 		//initiating user functions of entries
-		
+
 		String user_input="1";
-		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3") || user_input.equals("4") || user_input.equals("5") || user_input.equals("6"))) {
-			
+		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3") || user_input.equals("4") || user_input.equals("5") || user_input.equals("6") || user_input.equals("7") || user_input.equals("8"))) {
+
 			// Checking in address list is present in hashmap
 			System.out.print("Enter the Name of the Address Book: ");
 			String bookName = sc.next();
@@ -200,9 +200,9 @@ public class AddressBookMain {
 				System.out.println("Address book with name " + bookName + " not found. Creating a new entry");
 				buildObj.addBookMap(bookName,new ArrayList<Collection>());
 			}
-			
+
 			System.out.println("Record "+bookName+" loaded.");
-			
+
 			System.out.println();				//Waiting for user input
 			System.out.println("What now?");
 			System.out.println("1. Add a new contact.");
@@ -211,12 +211,14 @@ public class AddressBookMain {
 			System.out.println("4. Search all.");
 			System.out.println("5. Search by city.");
 			System.out.println("6. Search by state.");
-			System.out.println("7. Switch Directory");
+			System.out.println("7. Count by city.");
+			System.out.println("8. Count by state.");
+			System.out.println("9. Switch Directory");
 			System.out.println("Logout");
 			user_input=sc.next();
-			
+
 			switch(user_input) {
-			
+
 			case "1": {
 				Collection entry=buildObj.add();		//calling function to make new entry
 				buildObj.addToRecord(entry,bookName);			//Adding entry to record
@@ -271,6 +273,32 @@ public class AddressBookMain {
 				break;
 			}
 			case "7": {
+				int count=0;
+				System.out.print("City Name: ");
+				String location=sc.next();
+				for(Map.Entry mapElement : person_cityMap.entrySet()) {
+					String city = (String)mapElement.getKey();
+					if (location.equals(city)) {
+						count++;
+					}
+				}
+				System.out.println("The no. of people in "+location+"are "+count);
+				break;
+			}
+			case "8": {
+				int count=0;
+				System.out.print("State Name: ");
+				String location=sc.next();
+				for(Map.Entry mapElement : person_stateMap.entrySet()) {
+					String state = (String)mapElement.getKey();
+					if (location.equals(state)) {
+						count++;
+					}
+				}
+				System.out.println("The no. of people in "+location+" are "+count);
+				break;
+			}
+			case "9": {
 				user_input="1";
 				continue;
 			}
@@ -278,7 +306,7 @@ public class AddressBookMain {
 				break;
 			}
 		}
-		
+
 		//displaying all entries
 		buildObj.display();
 	}
