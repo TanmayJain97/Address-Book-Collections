@@ -1,2 +1,2 @@
 # Address-Book-Collections
-UC 7 - Preventing Duplicate entries of same person in particular Address Book
+Modified to UC 8 - Search Contact across multiple AddressBook using City/State and Name
