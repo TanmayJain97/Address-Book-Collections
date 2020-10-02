@@ -1,5 +1,6 @@
 package AddressBook;
 
+
 public class Collection {
 
 	public String firstName;		//Obj Attributes
