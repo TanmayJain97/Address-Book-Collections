@@ -188,23 +188,32 @@ public class AddressBookMain {
 		return stream;
 	}
 	
+	public void sortedStreamDisplay() {
+		Stream<Contacts> sorted_stream = record.stream();
+		sorted_stream.sorted(
+
+				Comparator.comparing(Contacts::getFirstName)
+		
+				).forEach(this::display);
+	}
+	
 	public static void main(String[] args) {
 
 		AddressBookMain buildObj=new AddressBookMain();
 
 		//Creating first entry
-		Contacts entry1=new Contacts("Narendra", "Modi",
-				"PMO", "New Delhi", "Delhi", 114102, "9765422564",
-				"pmo@office.com");
+		Contacts entry1=new Contacts("Tanmay", "Jain",
+				"Mahaveer Nagar", "Jaipur", "Raj", 302011, "9765485884",
+				"mail.tanmay@gmail.com");
 		buildObj.addToRecord(entry1,"AddressBook1");				//Adding entry to record
 		System.out.println(entry1);
 		person_cityMap.put("New Delhi",entry1);
 		person_stateMap.put("Delhi",entry1);
 
 		//Creating second entry
-		Contacts entry2=new Contacts("Tanmay", "Jain",
-				"Mahaveer Nagar", "Jaipur", "Raj", 302011, "9765485884",
-				"mail.tanmay@gmail.com");
+		Contacts entry2=new Contacts("Narendra", "Modi",
+				"PMO", "New Delhi", "Delhi", 114102, "9765422564",
+				"pmo@office.com");
 		buildObj.addToRecord(entry2,"AddressBook1");				//Adding entry to record
 		System.out.println(entry2);
 		person_cityMap.put("Jaipur",entry2);
@@ -213,7 +222,7 @@ public class AddressBookMain {
 		//initiating user functions of entries
 
 		String user_input="1";
-		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3") || user_input.equals("4") || user_input.equals("5") || user_input.equals("6") || user_input.equals("7"))) {
+		while((user_input.equals("1") || user_input.equals("2") || user_input.equals("3") || user_input.equals("4") || user_input.equals("5") || user_input.equals("6") || user_input.equals("7") || user_input.equals("8"))) {
 
 			// Checking in address list is present in hashmap
 			System.out.print("Enter the Name of the Address Book: ");
@@ -238,7 +247,8 @@ public class AddressBookMain {
 			System.out.println("5. View by city/state");
 			System.out.println("6. Count contacts in City");
 			System.out.println("7. Count contacts in State");
-			System.out.println("8. Switch Directory");
+			System.out.println("8. View alphabetical list of Contacts");
+			System.out.println("9. Switch Directory");
 			System.out.println("Logout");
 			user_input=sc.next();
 
@@ -303,6 +313,10 @@ public class AddressBookMain {
 				break;
 			}
 			case "8": {
+				buildObj.sortedStreamDisplay();
+				break;
+			}
+			case "9": {
 				user_input="1";
 				continue;
 			}
