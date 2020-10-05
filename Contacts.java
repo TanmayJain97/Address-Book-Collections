@@ -1,6 +1,5 @@
 package AddressBook;
 
-
 public class Contacts {
 
 	public String firstName;		//Obj Attributes
@@ -12,7 +11,7 @@ public class Contacts {
 	public String phoneNo;
 	public String email;
 	
-	public Collection(String firstName, String lastName, String address,
+	public Contacts(String firstName, String lastName, String address,
 			String city, String state, long zipCode,
 			String phoneNo, String email) {
 		this.firstName = firstName;				//Constructor
@@ -43,5 +42,13 @@ public class Contacts {
 	public String toString() {
 		System.out.println();
 		return "Created entry for "+firstName+" "+lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 }
