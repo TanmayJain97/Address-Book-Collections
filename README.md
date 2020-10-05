@@ -1,2 +1,2 @@
 # Address-Book-Collections
-Modified to UC 10 - Get count of contacts in a given City and given State.
+Modified to UC 11 - Display all details of contacts sorted in alphabetical order by first name.
