@@ -44,11 +44,11 @@ public class Contacts {
 		return "Created entry for "+firstName+" "+lastName;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public long getZipCode() {
+		return zipCode;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setZipCode(long zipCode) {
+		this.zipCode = zipCode;
 	}
 }
