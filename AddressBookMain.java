@@ -7,6 +7,26 @@ public class AddressBookMain {
 
 	static Scanner sc = new Scanner(System.in);
 	
+	//Generating function for sorting
+	static SortingFunction firstName = sorted_stream ->
+	((Stream<Contacts>) sorted_stream).sorted((obj1,obj2)->
+		obj1.firstName.compareTo(obj2.firstName));
+	
+	static SortingFunction city = sorted_stream ->
+	((Stream<Contacts>) sorted_stream).sorted((obj1,obj2)->
+		obj1.city.compareTo(obj2.city));
+	
+	static SortingFunction state = sorted_stream ->
+	((Stream<Contacts>) sorted_stream).sorted((obj1,obj2)->
+		obj1.state.compareTo(obj2.state));
+	
+	static SortingFunction zip = sorted_stream ->
+	((Stream<Contacts>) sorted_stream).sorted(
+			
+			Comparator.comparingLong(Contacts::getZipCode)
+			
+			);
+	
 	private HashMap<String, ArrayList<Contacts>> addressBook;
 	private static ArrayList<Contacts> record;
 	private static HashMap<String, Contacts> person_cityMap;
@@ -188,13 +208,9 @@ public class AddressBookMain {
 		return stream;
 	}
 	
-	public void sortedStreamDisplay() {
+	public void sortedStreamDisplay(SortingFunction function) {
 		Stream<Contacts> sorted_stream = record.stream();
-		sorted_stream.sorted(
-
-				Comparator.comparing(Contacts::getFirstName)
-		
-				).forEach(this::display);
+		function.sort(sorted_stream).forEach(this::display);
 	}
 	
 	public static void main(String[] args) {
@@ -247,7 +263,7 @@ public class AddressBookMain {
 			System.out.println("5. View by city/state");
 			System.out.println("6. Count contacts in City");
 			System.out.println("7. Count contacts in State");
-			System.out.println("8. View alphabetical list of Contacts");
+			System.out.println("8. View sorted list of Contacts");
 			System.out.println("9. Switch Directory");
 			System.out.println("Logout");
 			user_input=sc.next();
@@ -313,7 +329,30 @@ public class AddressBookMain {
 				break;
 			}
 			case "8": {
-				buildObj.sortedStreamDisplay();
+				System.out.println("Please enter sorting parameter.");
+				System.out.println("Sort by - 1. Name");
+				System.out.println("          2. City");
+				System.out.println("          3. State");
+				System.out.println("          4. Zip Code");
+				String input=sc.next();
+				
+				switch(input) {
+				
+				case "1":
+					buildObj.sortedStreamDisplay(firstName);
+					break;
+				case "2":
+					buildObj.sortedStreamDisplay(city);
+					break;
+				case "3":
+					buildObj.sortedStreamDisplay(state);
+					break;
+				case "4":
+					buildObj.sortedStreamDisplay(zip);
+					break;
+				default:
+					System.out.println("Unknown Input.");
+				}
 				break;
 			}
 			case "9": {
