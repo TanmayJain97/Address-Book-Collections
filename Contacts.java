@@ -1,7 +1,7 @@
 package AddressBook;
 
 
-public class Collection {
+public class Contacts {
 
 	public String firstName;		//Obj Attributes
 	public String lastName;
@@ -42,7 +42,6 @@ public class Collection {
 	@Override
 	public String toString() {
 		System.out.println();
-		display();
 		return "Created entry for "+firstName+" "+lastName;
 	}
 }
