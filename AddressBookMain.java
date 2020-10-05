@@ -5,33 +5,37 @@ import java.util.*;
 
 public class AddressBookMain {
 	
-	private HashMap<String, ArrayList<Collection>> addressBook;
-	private static ArrayList<Collection> record;
+	private HashMap<String, ArrayList<Contacts>> addressBook;
+	private static ArrayList<Contacts> record;
 
 	public AddressBookMain() {
-		record=new ArrayList<Collection>();
-		addressBook = new HashMap<String, ArrayList<Collection>>();
+		record=new ArrayList<Contacts>();
+		addressBook = new HashMap<String, ArrayList<Contacts>>();
 	}
 
 	public void display() {
-		for (Collection obj:record) {
+		for (Contacts obj:record) {
 			obj.display();
 		}
 	}
 	
-	public void addToRecord(Collection obj,String bookname) {
+	public void display(Contacts obj) {
+		obj.display();
+	}
+	
+	public void addToRecord(Contacts obj,String bookname) {
 		try {
-			record.add(new Collection(obj.firstName, obj.lastName, obj.address,
+			record.add(new Contacts(obj.firstName, obj.lastName, obj.address,
 					obj.city,obj.state, obj.zipCode, obj.phoneNo, obj.email));
 			addBookMap(bookname, record);
 		}catch(NullPointerException e) {}
 	}
 
-	public void addBookMap(String bookName, ArrayList<Collection> obj) {
+	public void addBookMap(String bookName, ArrayList<Contacts> obj) {
 		addressBook.put(bookName, obj);
 	}
 	
-	public static Collection add() {
+	public static Contacts add() {
 		
 		//method for adding new entries.
 		Scanner sc=new Scanner(System.in);
@@ -73,19 +77,19 @@ public class AddressBookMain {
 		email=sc.next();
 		
 		//saving as new entry
-		Collection entry=new Collection(firstName,lastName,
+		Contacts entry=new Contacts(firstName,lastName,
 				address,city,state,zipCode,phoneNo,email);
 		return entry;					//returning entry to main
 	}
 	
-	public static ArrayList<Collection> edit(ArrayList<Collection> list, String name) {
+	public static ArrayList<Contacts> edit(ArrayList<Contacts> list, String name) {
 		
 		//method for edit
 		Scanner sc=new Scanner(System.in);
 		boolean flag=false;
 		name.replaceAll("\\P{Print}","");
 		String lower_name=name.toLowerCase();
-		for (Collection obj:list) {
+		for (Contacts obj:list) {
 			String firstName=obj.firstName.toLowerCase();
 			String lastName=obj.lastName.toLowerCase();
 			if (firstName.equals(lower_name) ||
@@ -115,7 +119,7 @@ public class AddressBookMain {
 		return list;
 	}
 	
-	public static ArrayList<Collection> delete(ArrayList<Collection> list, String name) {
+	public static ArrayList<Contacts> delete(ArrayList<Contacts> list, String name) {
 		
 		//method for delete
 		Scanner sc=new Scanner(System.in);
@@ -124,7 +128,7 @@ public class AddressBookMain {
 		String lower_name=name.toLowerCase();
 		
 		try {
-			for (Collection obj:list) {
+			for (Contacts obj:list) {
 				String firstName=obj.firstName.toLowerCase();
 				String lastName=obj.lastName.toLowerCase();
 				if (firstName.equals(lower_name) ||
@@ -152,7 +156,9 @@ public class AddressBookMain {
 					&&(obj.lastName.equals(contactLastName))								//checking for last name match
 					))
 
-					.forEach(System.out::println);
+					.forEach(
+						this::display
+					);
 	}
 	
 	public static void main(String[] args) {
@@ -161,14 +167,14 @@ public class AddressBookMain {
 		AddressBookMain buildObj=new AddressBookMain();
 		
 		//Creating first entry
-		Collection entry1=new Collection("Narendra", "Modi",
+		Contacts entry1=new Contacts("Narendra", "Modi",
 				"PMO", "New Delhi", "Delhi", 114102, "9765422564",
 				"pmo@office.com");
 		buildObj.addToRecord(entry1,"AddressBook1");				//Adding entry to record
 		System.out.println(entry1);
 		
 		//Creating second entry
-		Collection entry2=new Collection("Tanmay", "Jain",
+		Contacts entry2=new Contacts("Tanmay", "Jain",
 				"Mahaveer Nagar", "Jaipur", "Raj", 302011, "9765485884",
 				"mail.tanmay@gmail.com");
 		buildObj.addToRecord(entry2,"AddressBook1");				//Adding entry to record
@@ -188,7 +194,7 @@ public class AddressBookMain {
 
 			else {
 				System.out.println("Address book with name " + bookName + " not found. Creating a new entry");
-				buildObj.addBookMap(bookName,new ArrayList<Collection>());
+				buildObj.addBookMap(bookName,new ArrayList<Contacts>());
 			}
 			
 			System.out.println("Record "+bookName+" loaded.");
@@ -206,7 +212,7 @@ public class AddressBookMain {
 			switch(user_input) {
 			
 			case "1": {
-				Collection entry=buildObj.add();		//calling function to make new entry
+				Contacts entry=buildObj.add();		//calling function to make new entry
 				buildObj.addToRecord(entry,bookName);			//Adding entry to record
 				System.out.println(entry);
 				break;
@@ -214,7 +220,7 @@ public class AddressBookMain {
 			case "2": {
 				System.out.println("Please enter First/Last name of entry to be edited.");
 				String name=sc.next();
-				ArrayList<Collection> list = buildObj.edit(record,name);
+				ArrayList<Contacts> list = buildObj.edit(record,name);
 				break;
 			}
 			case "3": {
