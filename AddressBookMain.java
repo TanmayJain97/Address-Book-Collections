@@ -263,6 +263,40 @@ public class AddressBookMain {
 		function.sort(sorted_stream).forEach(this::display);
 	}
 	
+	public void writeToCSV() {
+		if(new FileIOOpenCSV().writeData(record)) {
+			System.out.println("Write to CSV Successful.");
+		}
+	}
+	
+	public ArrayList<Contacts> readFromCSV(){
+		ArrayList<Contacts> fileRecord=new FileIOOpenCSV().readData();
+		if(fileRecord!=null) {
+			for (Contacts c:fileRecord) {
+				c.display();
+			}
+			return fileRecord;
+		}else System.out.println("Nothing to read!!");
+		return null;
+	}
+	
+	public void writeToJSON() {
+		if(new FileIOGson().writeData(record)) {
+			System.out.println("Write to JSON Successful.");
+		}
+	}
+	
+	public ArrayList<Contacts> readFromJSON() {
+		ArrayList<Contacts> fileRecord=new FileIOGson().readData();
+		if(fileRecord!=null) {
+			for (Contacts c:fileRecord) {
+				c.display();
+			}
+			return fileRecord;
+		}else System.out.println("Nothing to read!!");
+		return null;
+	}
+	
 	public static void main(String[] args) {
 
 		AddressBookMain buildObj=new AddressBookMain();
@@ -410,14 +444,12 @@ public class AddressBookMain {
 			}
 			case "9": {
 				buildObj.writeToFile();
+				buildObj.writeToCSV();
+				buildObj.writeToJSON();
 				break;
 			}
 			case "10": {
-				ArrayList<Contacts> fileRecord=buildObj.readFromFile();
-				
-				for (Contacts c:fileRecord) {
-					c.display();
-				}
+				buildObj.readFromJSON();
 				break;
 			}
 			case "11": {
