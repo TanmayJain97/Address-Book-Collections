@@ -64,4 +64,10 @@ public class Contacts {
 		return firstName+":"+lastName+":"+address+":"+city+":"+state
 				+":"+zipCode+":"+phoneNo+":"+email;
 	}
+	
+	public String[] pushDataCSV() {
+		String[] dataStr={firstName, lastName, address, city, state
+				, Long.toString(zipCode), phoneNo, email};
+		return dataStr;
+	}
 }
